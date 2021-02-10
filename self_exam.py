@@ -37,8 +37,8 @@ def split():
             counter += 1
         elif answer == "done" or answer == "Done" or answer == "DONE":
             answers1 = int(len(open('correct_answers.txt', 'r').readlines()))
-            percentage1 = (answers1 * counter) / 100
-            print(f'You have done {answers1} right answers out of {counter} questions.\nYour success rate is {percentage1}. See you next time !')
+            percentage1 = ((answers1 * 100)/counter)
+            print(f'You have done {answers1} right answers out of {counter} questions.\nYour success rate is {percentage1}%. See you next time !')
             time.sleep(5)
             open('wrong_answer.txt', 'w').close()
             open('correct_answers.txt', 'w').close()
@@ -57,9 +57,7 @@ while counter <= 125:
 else:
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
-    percentage = (answers * 125) / 100
+    percentage = ((answers * 100) / 125)
     print(f'You have finished to exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.')
-    time.sleep(5)
-    open('wrong_answer.txt', 'w').close()
-    open('correct_answers.txt', 'w').close()
+    time.sleep(10)
     quit()
