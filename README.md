@@ -11,13 +11,9 @@ In order to use the script please format your questions file by the following or
 NO.1 Ben goes to the shop with 10$. he use 10% of it on candies and 30% on snackes.
 how much money does Ben has after shopping ?
 A. 4$
-
 B. 6$
-
 C. 3%
-
 D.7$
-
 Answer : B
 
 NO.2 Alex studies 3 hours a day for 4 days in a week.
