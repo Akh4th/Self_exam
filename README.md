@@ -9,9 +9,7 @@ In order to use the script please format your questions file by the following or
 
 ### 'quiz.txt' EXAMPLE ###
 NO.1 Ben goes to the shop with 10$. he use 10% of it on candies and 30% on snackes.
-
 how much money does Ben has after shopping ?
-
 A. 4$
 
 B. 6$
