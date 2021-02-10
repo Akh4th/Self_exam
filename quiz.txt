@@ -1,0 +1,13 @@
+This script will read your text file and will pop-up random question out of 720 possible questions and will test you for 125 questions.
+The script reads 'quiz.txt' file with the following format:
+
+Questions format :
+
+NO.<question number>: XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+A. XXXXXXXXXXXXXXX
+B. XXXXXXXXXXXXXXX
+C. XXXXXXXXXXXXXXX
+D. XXXXXXXXXXXXXXX
+Answer : X
