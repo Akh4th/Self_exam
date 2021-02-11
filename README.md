@@ -1,3 +1,7 @@
+######################################
+########## READ AS RAW FILE ##########
+######################################
+
 #### Self_exam ####
 This script was created for CE|H Dumps and can be used for all kinds of exams having same order.
 
