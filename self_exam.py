@@ -2,6 +2,8 @@ import re
 import random
 from datetime import datetime
 import time
+import os
+
 
 file = open('quiz.txt', 'r')
 d1 = file.read()
@@ -26,7 +28,7 @@ def split():
     x3 = question.splitlines()[-1]
     correct = x3[-1]
     print(question[:-9])
-    answer = input('\nPlease enter your answer ').upper()
+    answer = input('\nEnter your answer or type "skip" -> ').upper()
 
     def answer_check():
         global counter
@@ -44,6 +46,9 @@ def split():
             open('wrong_answer.txt', 'w').close()
             open('correct_answers.txt', 'w').close()
             quit()
+        elif answer == "skip" or answer == "Skip" or answer == "SKIP":
+            clear()
+            return
         else:
             print('Incorrect answer !\nThe correct answer is ' + correct + '\n')
             wrong = open('wrong_answer.txt', 'a')
@@ -53,7 +58,12 @@ def split():
     answer_check()
 
 
+def clear():
+    os.system('cls')
+
+
 while counter <= 125:
+    clear()
     split()
 else:
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
