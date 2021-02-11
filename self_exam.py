@@ -38,6 +38,7 @@ def split():
             right.write(date + " - " + hour + ' Correct answer question number : ' + str(page) + "\n")
             right.close()
             counter += 1
+            time.sleep(1)
         elif answer == "done" or answer == "Done" or answer == "DONE":
             answers1 = int(len(open('correct_answers.txt', 'r').readlines()))
             percentage1 = ((answers1 * 100)/(counter-1))
@@ -54,6 +55,7 @@ def split():
             wrong = open('wrong_answer.txt', 'a')
             wrong.write(date + " - " + hour + ' Incorrect answer question number : ' + str(page) + "\n")
             counter += 1
+            time.sleep(2)
 
     answer_check()
 
