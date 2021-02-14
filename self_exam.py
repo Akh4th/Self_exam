@@ -3,6 +3,7 @@ import random
 from datetime import datetime
 import time
 import os
+from os import name
 
 
 file = open('quiz.txt', 'r')
@@ -61,7 +62,10 @@ def split():
 
 
 def clear():
-    os.system('cls')
+    if name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 
 while counter <= 125:
