@@ -11,8 +11,7 @@ file.close()
 d2 = str(d1)
 print("Welcome user. Type 'done' whenever you want to quit.\n")
 time1 = datetime.now()
-date = time1.strftime('%D')
-hour = time1.strftime(':%H:%M:%S')
+hour = time1.strftime('%H:%M:%S')
 global counter
 counter = 0
 
@@ -37,17 +36,20 @@ def split():
     def answer_check():
         global counter
         if answer == correct:
+            ans_time = datetime.now()
+            ans_date = ans_time.strftime('%D:')
+            ans_hour = ans_time.strftime('%H:%M:%S')
             print('Thats correct !\n')
             right = open('correct_answers.txt', 'a')
-            right.write(date + " - " + hour + ' Correct answer question number : ' + str(page) + "\n")
+            right.write(ans_date + " - " + ans_hour + ' Correct answer question number : ' + str(page) + "\n")
             right.close()
             counter += 1
+            clock()
             time.sleep(1)
         elif answer == "done" or answer == "Done" or answer == "DONE":
             answers1 = int(len(open('correct_answers.txt', 'r').readlines()))
             percentage1 = ((answers1 * 100) / (counter - 1))
-            done1 = input(
-                f'You have done {answers1} right answers out of {counter - 1} questions.\nYour success rate is {percentage1}%.\nType YES in order to get score file. ').upper()
+            done1 = input(f'You have done {answers1} right answers out of {counter - 1} questions.\nYour success rate is {percentage1}%.\nType YES in order to get score file. ').upper()
             if done1 == 'YES':
                 print('results.txt has your wrong questions.')
                 score()
@@ -55,16 +57,36 @@ def split():
                 quit()
         elif answer == "skip" or answer == "Skip" or answer == "SKIP":
             clear()
+            clock()
             return
         else:
+            ans_time = datetime.now()
+            ans_date = ans_time.strftime('%D:')
+            ans_hour = ans_time.strftime('%H:%M:%S')
             print('Incorrect answer !\nThe correct answer is ' + correct + '\n')
             wrong = open('wrong_answer.txt', 'a')
-            wrong.write(date + " - " + hour + ' Incorrect answer question number : ' + str(page) + "\n")
+            wrong.write(ans_date + " - " + ans_hour + ' Incorrect answer question number : ' + str(page) + "\n")
             wrong.close()
             counter += 1
+            clock()
             time.sleep(2)
 
     answer_check()
+
+
+def clock():
+    global counter
+    time_check = datetime.now()
+    hour_check = time_check.strftime('%H:%M:%S')
+    new_time = hour_check.split(':')
+    new_hour = new_time[0]
+    old_time = hour.split(':')
+    old_hour = old_time[0]
+    test_time = int(old_hour)+2
+    if new_hour == test_time:
+        counter = 125
+    else:
+        return
 
 
 def clear():
