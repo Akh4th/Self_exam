@@ -19,7 +19,7 @@ counter = 0
 while counter == 0:
     open('wrong_answer.txt', 'w').close()
     open('correct_answers.txt', 'w').close()
-    time.sleep(3)
+    time.sleep(1)
     counter += 1
 
 
