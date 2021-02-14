@@ -5,7 +5,6 @@ import time
 import os
 from os import name
 
-
 file = open('quiz.txt', 'r')
 d1 = file.read()
 file.close()
@@ -15,10 +14,14 @@ time1 = datetime.now()
 date = time1.strftime('%D')
 hour = time1.strftime(':%H:%M:%S')
 global counter
-counter = 1
-open('wrong_answer.txt', 'w').close()
-open('correct_answers.txt', 'w').close()
-time.sleep(3)
+counter = 0
+
+
+while counter == 0:
+    open('wrong_answer.txt', 'w').close()
+    open('correct_answers.txt', 'w').close()
+    time.sleep(3)
+    counter += 1
 
 
 def split():
@@ -42,12 +45,14 @@ def split():
             time.sleep(1)
         elif answer == "done" or answer == "Done" or answer == "DONE":
             answers1 = int(len(open('correct_answers.txt', 'r').readlines()))
-            percentage1 = ((answers1 * 100)/(counter-1))
-            print(f'You have done {answers1} right answers out of {counter-1} questions.\nYour success rate is {percentage1}%. See you next time !')
-            time.sleep(5)
-            open('wrong_answer.txt', 'w').close()
-            open('correct_answers.txt', 'w').close()
-            quit()
+            percentage1 = ((answers1 * 100) / (counter - 1))
+            done1 = input(
+                f'You have done {answers1} right answers out of {counter - 1} questions.\nYour success rate is {percentage1}%.\nType YES in order to get score file. ').upper()
+            if done1 == 'YES':
+                print('results.txt has your wrong questions.')
+                score()
+            else:
+                quit()
         elif answer == "skip" or answer == "Skip" or answer == "SKIP":
             clear()
             return
@@ -55,6 +60,7 @@ def split():
             print('Incorrect answer !\nThe correct answer is ' + correct + '\n')
             wrong = open('wrong_answer.txt', 'a')
             wrong.write(date + " - " + hour + ' Incorrect answer question number : ' + str(page) + "\n")
+            wrong.close()
             counter += 1
             time.sleep(2)
 
@@ -68,6 +74,33 @@ def clear():
         os.system('clear')
 
 
+global num
+num = 0
+
+
+def score():
+    file_lines1 = int(len(open('wrong_answer.txt', 'r').readlines()))
+    if file_lines1 == 0:
+        print('Nothing to show...')
+        quit()
+    else:
+        global num
+        file_lines = file_lines1 - 1
+        while num <= file_lines:
+            e = open('wrong_answer.txt', 'r').readlines()
+            e2 = e[num]
+            a, *b, c = e2.split()
+            quest_number = int(c)-1
+            new = open('results.txt', 'a+')
+            x2 = re.split("\n\n", d2)
+            print(x2[quest_number])
+            new.write("\n\n" + x2[quest_number])
+            num += 1
+            new.close()
+        else:
+            quit()
+
+
 while counter <= 125:
     clear()
     split()
@@ -75,6 +108,9 @@ else:
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
     percentage = ((answers * 100) / 125)
-    print(f'You have finished to exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.')
-    time.sleep(10)
-    quit()
+    done = input(
+        f'You have finished to exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file').upper()
+    if done == 'YES':
+        score()
+    else:
+        quit()
