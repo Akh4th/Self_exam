@@ -9,6 +9,7 @@ file = open('quiz.txt', 'r')
 d1 = file.read()
 file.close()
 d2 = str(d1)
+pages = d2.count('NO.')
 print("Welcome user. Type 'done' whenever you want to quit.\n")
 time1 = datetime.now()
 hour = time1.strftime('%H:%M:%S')
@@ -25,7 +26,7 @@ while counter == 0:
 
 def split():
     print(f'Question {counter}/125')
-    page = random.randint(1, 720)
+    page = random.randint(1, pages)
     x = re.split("\n\n", d2)
     question = x[page]
     x3 = question.splitlines()[-1]
