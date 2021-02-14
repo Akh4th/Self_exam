@@ -76,10 +76,12 @@ def clock():
     hour_check = time_check.strftime('%H:%M:%S')
     new_time = hour_check.split(':')
     new_hour = new_time[0]
+    new_min = new_time[1]
     old_time = hour.split(':')
     old_hour = old_time[0]
+    old_min = old_time[1]
     test_time = int(old_hour)+2
-    if new_hour == test_time:
+    if new_hour == test_time and new_min == old_min:
         counter = 125
     else:
         return
@@ -114,6 +116,7 @@ def score():
             new.write("\n\n" + x2[quest_number])
             num += 1
             new.close()
+            quit()
         else:
             quit()
 
@@ -124,7 +127,7 @@ def done():
     total = answers+wrongs
     if total != 125:
         percentage = ((answers * 100) / total)
-        finished = input(f'You have finished to exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file').upper()
+        finished = input(f'Your time is up !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file').upper()
         if finished == 'YES':
             score()
         else:
@@ -143,4 +146,3 @@ while counter <= 125:
     split()
 else:
     done()
-
