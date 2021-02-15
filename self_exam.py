@@ -65,6 +65,9 @@ def split():
             wrong = open('wrong_answer.txt', 'a')
             wrong.write(ans_date + " - " + ans_hour + ' Incorrect answer question number : ' + quest1 + "\n")
             wrong.close()
+            res = open('results.txt', 'a')
+            res.write('Selected answer : '+answer+'\n'+x[page]+'\n')
+            res.close()
             counter += 1
             clock()
             time.sleep(2)
@@ -89,7 +92,7 @@ def clock():
         return
 
 
-# Clear console every iteration 
+# Clear console every iteration
 def clear():
     if name == 'nt':
         os.system('cls')
@@ -97,31 +100,7 @@ def clear():
         os.system('clear')
 
 
-# Get wrong answers questions along with their correct answers 
-def score():
-    file_lines1 = int(len(open('wrong_answer.txt', 'r').readlines()))
-    if file_lines1 == 0:
-        print('Nothing to show...')
-        quit()
-    else:
-        global num
-        file_lines = file_lines1 - 1
-        while num <= file_lines:
-            e = open('wrong_answer.txt', 'r').readlines()
-            e2 = e[num]
-            a, *b, c = e2.split()
-            quest_number = int(c)-1
-            new = open('results.txt', 'a+')
-            x2 = re.split("\n\n", d2)
-            new.write("\n\n" + x2[quest_number])
-            num += 1
-            new.close()
-            quit()
-        else:
-            quit()
-
-
-# After exam has ended one reason or another user will be asked 
+# After exam has ended one reason or another user will be asked
 # if he desires to use previous function (score())
 def done():
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
@@ -129,25 +108,13 @@ def done():
     total = answers+wrongs
     if total != 125:
         percentage = ((answers * 100) / total)
-        finished = input(f'Your exam is over !\nYou have {answers} right answers and {wrongs} wrong answers out of {total} questions and {percentage}% of success.\nType yes to get results file ').upper()
-        if finished == 'YES':
-            score()
-        else:
-            quit()
+        print(f'Your exam is over !\nYou have {answers} right answers and {wrongs} wrong answers out of {total} questions and {percentage}% of success.')
     else:
         percentage = ((answers * 100) / 125)
         if percentage < 66.666:
-            finished = input(f'You have successfully passed the exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file ').upper()
-            if finished == 'YES':
-                score()
-            else:
-                quit()
+            print(f'You have successfully passed the exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.')
         else:
-            finished = input(f'You have failed the exam ! \nYou have {answers} right answers and {wrongs} wrongs answers out of {total} questions.\n{percentage}% of success. \nType yes to get results file ').upper()
-            if finished == 'YES':
-                score()
-            else:
-                quit()
+            print(f'You have failed the exam ! \nYou have {answers} right answers and {wrongs} wrongs answers out of {total} questions.\n{percentage}% of success.')
 
 
 while counter <= 125:
