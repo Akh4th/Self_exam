@@ -1,13 +1,41 @@
-This script will read your text file and will pop-up random question out of 720 possible questions and will test you for 125 questions.
-The script reads 'quiz.txt' file with the following format:
+NO.1 Ben goes to the shop with 10$. he use 10% of it on candies and 30% on snackes.
+how much money does Ben has after shopping ?
+A. 4$
+B. 6$
+C. 3%
+D.7$
+Answer : B
 
-Questions format :
+NO.2 Alex studies 3 hours a day for 4 days in a week.
+how much times does Alex study on a full month ?
+A. 48 hours
+B. 52 hours
+C. 46 hours
+D. 40 hours
+Answer : A
 
-NO.<question number>: XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-A. XXXXXXXXXXXXXXX
-B. XXXXXXXXXXXXXXX
-C. XXXXXXXXXXXXXXX
-D. XXXXXXXXXXXXXXX
-Answer : X
+NO.3 Berta has being using calculator for calculating even simple equations.
+What will be the potential risks Bertas taking ?
+A. Calculator might not always work correctly
+B. Berta can be wrong when typing equtions to the calculator
+C. There is no potential risk using calculator
+D. Practice is Berta's best friend without it she wont know how to do it by her own
+Answer : D
+
+NO.4 Mark has lots of friends. One of hes friends offered him once in a life time job at his IT 
+department as Junior PT. The department is located two and half hours of driving away from Mark.
+what should Mark do ?
+A. Ignore this offer, if hes friend would mind he would offer something closer
+B. Thanks his friend for nothing after all manners is all that matters
+C. Be thankful to his friend, this kind of offer doesnt come more than once
+D. Offer this job to another friend who lives closer to the departments
+Answer : C
+
+NO.5 Matan has been working on hes new project for the last two months. he desires to create a malware
+that automate his Web-Application attack and create a 'Zero-day Exploit' that can penetrate through 'Windows Firewall'.
+What will be the best coding language for Matan ?
+A. C++
+B. Python
+C. C#
+D. Assembly
+Answer : B
