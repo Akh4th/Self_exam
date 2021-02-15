@@ -13,10 +13,11 @@ pages = d2.count('NO.')
 print("Welcome user. Type 'done' whenever you want to quit.\n")
 time1 = datetime.now()
 hour = time1.strftime('%H:%M:%S')
-global counter
+global counter, num
 counter = 0
+num = 0
 
-
+# Clears old answers files if existed
 while counter == 0:
     open('wrong_answer.txt', 'w').close()
     open('correct_answers.txt', 'w').close()
@@ -24,6 +25,7 @@ while counter == 0:
     counter += 1
 
 
+# Splitting random questions from text file and their answers
 def split():
     print(f'Question {counter}/125')
     page = random.randint(1, pages)
@@ -37,7 +39,7 @@ def split():
     def answer_check():
         global counter
         if answer == correct:
-            quest1 = int(page)
+            quest1 = str(page)
             ans_time = datetime.now()
             ans_date = ans_time.strftime('%D:')
             ans_hour = ans_time.strftime('%H:%M:%S')
@@ -55,7 +57,7 @@ def split():
             clock()
             return
         else:
-            quest1 = int(page)
+            quest1 = str(page)
             ans_time = datetime.now()
             ans_date = ans_time.strftime('%D:')
             ans_hour = ans_time.strftime('%H:%M:%S')
@@ -66,10 +68,10 @@ def split():
             counter += 1
             clock()
             time.sleep(2)
-
     answer_check()
 
 
+# Checks if time limit has passed (2 hours)
 def clock():
     global counter
     time_check = datetime.now()
@@ -87,6 +89,7 @@ def clock():
         return
 
 
+# Clear console every iteration 
 def clear():
     if name == 'nt':
         os.system('cls')
@@ -94,10 +97,7 @@ def clear():
         os.system('clear')
 
 
-global num
-num = 0
-
-
+# Get wrong answers questions along with their correct answers 
 def score():
     file_lines1 = int(len(open('wrong_answer.txt', 'r').readlines()))
     if file_lines1 == 0:
@@ -121,24 +121,33 @@ def score():
             quit()
 
 
+# After exam has ended one reason or another user will be asked 
+# if he desires to use previous function (score())
 def done():
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
     total = answers+wrongs
     if total != 125:
         percentage = ((answers * 100) / total)
-        finished = input(f'Your time is up !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file').upper()
+        finished = input(f'Your exam is over !\nYou have {answers} right answers and {wrongs} wrong answers out of {total} questions and {percentage}% of success.\nType yes to get results file ').upper()
         if finished == 'YES':
             score()
         else:
             quit()
     else:
         percentage = ((answers * 100) / 125)
-        finished = input(f'You have finished to exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file').upper()
-        if finished == 'YES':
-            score()
+        if percentage < 66.666:
+            finished = input(f'You have successfully passed the exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.\nType yes to get results file ').upper()
+            if finished == 'YES':
+                score()
+            else:
+                quit()
         else:
-            quit()
+            finished = input(f'You have failed the exam ! \nYou have {answers} right answers and {wrongs} wrongs answers out of {total} questions.\n{percentage}% of success. \nType yes to get results file ').upper()
+            if finished == 'YES':
+                score()
+            else:
+                quit()
 
 
 while counter <= 125:
