@@ -19,11 +19,3 @@ B. 6$
 C. 3%
 D.7$
 Answer : B
-
-NO.2 Alex studies 3 hours a day for 4 days in a week.
-how much times does Alex study on a full month ?
-A. 48 hours
-B. 52 hours
-C. 46 hours
-D. 40 hours
-Answer : A
