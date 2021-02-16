@@ -111,7 +111,7 @@ def done():
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
     total = answers+wrongs
-    if total != 125:
+    if total != 125 and wrongs > 0:
         percentage = ((answers * 100) / total)
         print(f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
         res = open('results.txt', 'a')
