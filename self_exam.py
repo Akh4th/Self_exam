@@ -108,15 +108,18 @@ def done():
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
     total = answers+wrongs
-    if total != 125:
+    if total != 125 and wrongs > 0:
         percentage = ((answers * 100) / total)
         print(f'Your exam is over !\nYou have {answers} right answers and {wrongs} wrong answers out of {total} questions and {percentage}% of success.')
         res = open('results.txt', 'a')
         res.write('****************************************\n')
-        res.write(date+hour + ': ' + percentage + 'Percents with '+answers+' correct answers.\n')
+        res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers.\n ')
         res.write('****************************************\n\n')
         res.close()
         time.sleep(5)
+        quit()
+    elif total == 0:
+        print('Good luck next time !')
         quit()
     else:
         percentage = ((answers * 100) / 125)
@@ -124,7 +127,7 @@ def done():
             print(f'You have successfully passed the exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
-            res.write(date + hour + ': ' + percentage + 'Percents with ' + answers + ' correct answers.\n')
+            res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers.\n ')
             res.write('****************************************\n\n')
             res.close()
             time.sleep(5)
@@ -133,7 +136,7 @@ def done():
             print(f'You have failed the exam ! \nYou have {answers} right answers and {wrongs} wrongs answers out of {total} questions.\n{percentage}% of success.')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
-            res.write(date + hour + ': ' + percentage + 'Percents with ' + answers + ' correct answers.\n')
+            res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers.\n ')
             res.write('****************************************\n\n')
             res.close()
             time.sleep(5)
