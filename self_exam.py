@@ -39,7 +39,7 @@ try:
         correct = x3[-1]
         print(question[:-9])
         answer = input('\nEnter your answer or type "skip" -> ').upper()
-
+        
         def answer_check():
             global counter
             if answer == correct:
@@ -79,7 +79,7 @@ try:
                 time.sleep(2)
 
         answer_check()
-except IndexError:
+except IndexError or ValueError or IOError:
     errors1 += 1
     while errors1 < 3:
         print('Something went wrong grabbing random question...\nTrying again...')
