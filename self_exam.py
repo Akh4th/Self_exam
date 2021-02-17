@@ -14,10 +14,11 @@ print("Welcome user. Type 'done' whenever you want to quit.\n")
 time1 = datetime.now()
 date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
-global counter, num, skipped
+global counter, num, skipped, errors1
 counter = 0
 num = 0
 skipped = 0
+errors1 = 0
 
 # Clears old answers files if existed
 while counter == 0:
@@ -28,54 +29,66 @@ while counter == 0:
 
 
 # Splitting random questions from text file and their answers
-def split():
-    print(f'Question {counter}/125')
-    page = random.randint(1, pages)
-    x = re.split("\n\n", d2)
-    question = x[page]
-    x3 = question.splitlines()[-1]
-    correct = x3[-1]
-    print(question[:-9])
-    answer = input('\nEnter your answer or type "skip" -> ').upper()
+try:
+    def split():
+        print(f'Question {counter}/125')
+        page = random.randint(1, pages)
+        x = re.split("\n\n", d2)
+        question = x[page]
+        x3 = question.splitlines()[-1]
+        correct = x3[-1]
+        print(question[:-9])
+        answer = input('\nEnter your answer or type "skip" -> ').upper()
 
-    def answer_check():
-        global counter
-        if answer == correct:
-            quest1 = str(page)
-            ans_time = datetime.now()
-            ans_date = ans_time.strftime('%D:')
-            ans_hour = ans_time.strftime('%H:%M:%S')
-            print('Thats correct !\n')
-            right = open('correct_answers.txt', 'a')
-            right.write(f'{ans_date} - {ans_hour} : Correct answer on question number : {quest1} \n')
-            right.close()
-            counter += 1
-            clock()
-            time.sleep(1)
-        elif answer == "done" or answer == "Done" or answer == "DONE":
-            done()
-        elif answer == "skip" or answer == "Skip" or answer == "SKIP":
-            global skipped
-            skipped += 1
-            clear()
-            clock()
-            return
-        else:
-            quest1 = str(page)
-            ans_time = datetime.now()
-            ans_date = ans_time.strftime('%D:')
-            ans_hour = ans_time.strftime('%H:%M:%S')
-            print(f'Incorrect answer ! \nThe correct answer is {correct} \n')
-            wrong = open('wrong_answer.txt', 'a')
-            wrong.write(f'{ans_date} - {ans_hour} : Incorrect answer on question number : {quest1} \n')
-            wrong.close()
-            res = open('results.txt', 'a')
-            res.write(f'Selected answer : {answer} \n {x[page]} \n\n')
-            res.close()
-            counter += 1
-            clock()
-            time.sleep(2)
-    answer_check()
+        def answer_check():
+            global counter
+            if answer == correct:
+                quest1 = str(page)
+                ans_time = datetime.now()
+                ans_date = ans_time.strftime('%D:')
+                ans_hour = ans_time.strftime('%H:%M:%S')
+                print('Thats correct !\n')
+                right = open('correct_answers.txt', 'a')
+                right.write(f'{ans_date} - {ans_hour} : Correct answer on question number : {quest1} \n')
+                right.close()
+                counter += 1
+                clock()
+                time.sleep(1)
+            elif answer == "done" or answer == "Done" or answer == "DONE":
+                done()
+            elif answer == "skip" or answer == "Skip" or answer == "SKIP":
+                global skipped
+                skipped += 1
+                clear()
+                clock()
+                return
+            else:
+                quest1 = str(page)
+                ans_time = datetime.now()
+                ans_date = ans_time.strftime('%D:')
+                ans_hour = ans_time.strftime('%H:%M:%S')
+                print(f'Incorrect answer ! \nThe correct answer is {correct} \n')
+                wrong = open('wrong_answer.txt', 'a')
+                wrong.write(f'{ans_date} - {ans_hour} : Incorrect answer on question number : {quest1} \n')
+                wrong.close()
+                res = open('results.txt', 'a')
+                res.write(f'Selected answer : {answer} \n {x[page]} \n\n')
+                res.close()
+                counter += 1
+                clock()
+                time.sleep(2)
+
+        answer_check()
+except IndexError:
+    errors1 += 1
+    while errors1 < 3:
+        print('Something went wrong grabbing random question...\nTrying again...')
+        time.sleep(2)
+        pass
+    else:
+        print('3 Errors were recorded, aborting...')
+        time.sleep(2)
+        quit()
 
 
 # Checks if time limit has passed (2 hours)
