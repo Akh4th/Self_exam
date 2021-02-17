@@ -14,9 +14,10 @@ print("Welcome user. Type 'done' whenever you want to quit.\n")
 time1 = datetime.now()
 date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
-global counter, num
+global counter, num, skipped
 counter = 0
 num = 0
+skipped = 0
 
 # Clears old answers files if existed
 while counter == 0:
@@ -54,6 +55,8 @@ def split():
         elif answer == "done" or answer == "Done" or answer == "DONE":
             done()
         elif answer == "skip" or answer == "Skip" or answer == "SKIP":
+            global skipped
+            skipped += 1
             clear()
             clock()
             return
@@ -110,7 +113,7 @@ def done():
     total = answers+wrongs
     if total != 125 and wrongs > 0:
         percentage = ((answers * 100) / total)
-        print(f'Your exam is over !\nYou have {answers} right answers and {wrongs} wrong answers out of {total} questions and {percentage}% of success.')
+        print(f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
         res = open('results.txt', 'a')
         res.write('****************************************\n')
         res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -123,8 +126,8 @@ def done():
         quit()
     else:
         percentage = ((answers * 100) / 125)
-        if percentage < 66.666:
-            print(f'You have successfully passed the exam !\nYou have {answers} right answers and {wrongs} wrong answers.\n{percentage}% of success.')
+        if percentage > 80:
+            print(f'You have successfully passed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
             res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -133,7 +136,7 @@ def done():
             time.sleep(5)
             quit()
         else:
-            print(f'You have failed the exam ! \nYou have {answers} right answers and {wrongs} wrongs answers out of {total} questions.\n{percentage}% of success.')
+            print(f'You have failed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
             res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
