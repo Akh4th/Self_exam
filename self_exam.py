@@ -40,10 +40,11 @@ def split():
     correct = x3[-1]
     print(question[:-9])
     answer = input('\nEnter your answer or type "skip" -> ').upper()
+
     def answer_check():
         global counter
         if answer == correct:
-            quest1 = str(page)
+            quest1 = str(page+1)
             ans_time = datetime.now()
             ans_date = ans_time.strftime('%D:')
             ans_hour = ans_time.strftime('%H:%M:%S')
@@ -63,7 +64,7 @@ def split():
             clock()
             return
         else:
-            quest1 = str(page)
+            quest1 = str(page+1)
             ans_time = datetime.now()
             ans_date = ans_time.strftime('%D:')
             ans_hour = ans_time.strftime('%H:%M:%S')
