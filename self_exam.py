@@ -39,7 +39,7 @@ try:
         correct = x3[-1]
         print(question[:-9])
         answer = input('\nEnter your answer or type "skip" -> ').upper()
-        
+
         def answer_check():
             global counter
             if answer == correct:
@@ -56,6 +56,8 @@ try:
                 time.sleep(1)
             elif answer == "done" or answer == "Done" or answer == "DONE":
                 done()
+            elif page in open('wrong_answer.txt', 'r') or open('correct_answers.txt', 'r'):
+                return 
             elif answer == "skip" or answer == "Skip" or answer == "SKIP":
                 global skipped
                 skipped += 1
