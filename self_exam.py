@@ -31,7 +31,7 @@ while counter == 0:
 # Splitting random questions from text file and their answers
 try:
     def split():
-        print(f'Question {counter}/125')
+        print(f'Question {counter}/{pages}')
         page = random.randint(1, pages)
         page_no = f'NO.{page+1}'
         x = re.split("\n\n", d2)
