@@ -38,6 +38,8 @@ try:
         question = x[page]
         x3 = question.splitlines()[-1]
         correct = x3[-1]
+        if page_no in open('wrong_answer.txt', 'r') or page_no in open('correct_answers.txt', 'r'):
+            return
         print(question[:-9])
         answer = input('\nEnter your answer or type "skip" -> ').upper()
 
@@ -57,8 +59,6 @@ try:
                 time.sleep(1)
             elif answer == "done" or answer == "Done" or answer == "DONE":
                 done()
-            elif page_no in open('wrong_answer.txt', 'r') or page_no in open('correct_answers.txt', 'r'):
-                return
             elif answer == "skip" or answer == "Skip" or answer == "SKIP":
                 global skipped
                 skipped += 1
