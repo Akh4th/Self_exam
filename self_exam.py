@@ -58,7 +58,6 @@ try:
             elif answer == "done" or answer == "Done" or answer == "DONE":
                 done()
             elif page_no in open('wrong_answer.txt', 'r') or page_no in open('correct_answers.txt', 'r'):
-                print(page_no)
                 return
             elif answer == "skip" or answer == "Skip" or answer == "SKIP":
                 global skipped
