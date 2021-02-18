@@ -33,6 +33,7 @@ try:
     def split():
         print(f'Question {counter}/125')
         page = random.randint(1, pages)
+        page_no = f'NO.{page+1}'
         x = re.split("\n\n", d2)
         question = x[page]
         x3 = question.splitlines()[-1]
@@ -56,8 +57,9 @@ try:
                 time.sleep(1)
             elif answer == "done" or answer == "Done" or answer == "DONE":
                 done()
-            elif page in open('wrong_answer.txt', 'r') or open('correct_answers.txt', 'r'):
-                return 
+            elif page_no in open('wrong_answer.txt', 'r') or page_no in open('correct_answers.txt', 'r'):
+                print(page_no)
+                return
             elif answer == "skip" or answer == "Skip" or answer == "SKIP":
                 global skipped
                 skipped += 1
