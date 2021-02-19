@@ -1,8 +1,4 @@
-######################################
-########## READ AS RAW FILE ##########
-######################################
-
-#### Self_exam ####
+####### Self_exam ########
 This script was basically created for CE|H Dumps but can be used for all kinds of exams having same format.
 
 The script requiers to be in the same folder with your exam text file ('quiz.txt')
