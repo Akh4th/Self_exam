@@ -26,7 +26,9 @@ time1 = datetime.now()
 date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
 end_time = format(time1 + timedelta(hours=time_limit), '%H:%M')
-print("Welcome user. Type 'done' whenever you want to quit.\n")
+min_quest = int((score_limit*amount)/100)
+print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit} hours.\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).")
+time.sleep(3)
 
 # Clears old answers files if existed
 while counter == 0:
