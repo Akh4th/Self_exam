@@ -16,6 +16,7 @@ amount = 125
 file = open('quiz.txt', 'r')
 print("Welcome user. Type 'done' whenever you want to quit.\n")
 time_limit = 2  # Hours
+score_limit = 80  # In percents
 
 # Settings
 d1 = file.read()
@@ -25,7 +26,7 @@ pages = d2.count('NO.')
 time1 = datetime.now()
 date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
-end_time = format(time1 + timedelta(hours=time_limit), '%H:%M:%S')
+end_time = format(time1 + timedelta(hours=time_limit), '%H:%M')
 
 # Clears old answers files if existed
 while counter == 0:
@@ -88,17 +89,17 @@ def split():
     answer_check()
 
 
-# Checks if time limit has passed (2 hours)
+# Checks if time limit has passed 
 def clock():
     global counter
-    time_check = datetime.now().strftime('%H:%M:%S')
+    time_check = datetime.now().strftime('%H:%M')
     if time_check == end_time:
         counter = 125
     else:
         return
 
 
-# Clear console every iteration
+# Clear console 
 def clear():
     if name == 'nt':
         os.system('cls')
@@ -106,8 +107,7 @@ def clear():
         os.system('clear')
 
 
-# After exam has ended one reason or another user will be asked
-# if he desires to use previous function (score())
+# Function for finishing the test at any point
 def done():
     clear()
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
@@ -115,8 +115,7 @@ def done():
     total = answers + wrongs
     if total != 125 and wrongs > 0:
         percentage = ((answers * 100) / total)
-        print(
-            f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
+        print(f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
         res = open('results.txt', 'a')
         res.write('****************************************\n')
         res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -129,9 +128,8 @@ def done():
         quit()
     else:
         percentage = ((answers * 100) / 125)
-        if percentage > 80:
-            print(
-                f'You have successfully passed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
+        if percentage > score_limit:
+            print(f'You have successfully passed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
             res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -140,8 +138,7 @@ def done():
             time.sleep(5)
             quit()
         else:
-            print(
-                f'You have failed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
+            print(f'You have failed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
             res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
