@@ -1,24 +1,31 @@
 import re
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 import os
 from os import name
 
-file = open('quiz.txt', 'r')
-d1 = file.read()
-file.close()
-d2 = str(d1)
-pages = d2.count('NO.')
-print("Welcome user. Type 'done' whenever you want to quit.\n")
-time1 = datetime.now()
-date = time1.strftime('%D:')
-hour = time1.strftime('%H:%M:%S')
 global counter, num, skipped, errors1
 counter = 0
 num = 0
 skipped = 0
 errors1 = 0
+
+# Customization Area #
+amount = 125
+file = open('quiz.txt', 'r')
+print("Welcome user. Type 'done' whenever you want to quit.\n")
+time_limit = 2  # Hours
+
+# Settings
+d1 = file.read()
+file.close()
+d2 = str(d1)
+pages = d2.count('NO.')
+time1 = datetime.now()
+date = time1.strftime('%D:')
+hour = time1.strftime('%H:%M:%S')
+end_time = format(time1 + timedelta(hours=time_limit), '%H:%M:%S')
 
 # Clears old answers files if existed
 while counter == 0:
@@ -29,11 +36,10 @@ while counter == 0:
 
 
 # Splitting random questions from text file and their answers
-
 def split():
-    print(f'Question {counter}/{pages}')
+    print(f'Question {counter}/{amount}, ends at {end_time}')
     page = random.randint(1, pages)
-    page_no = f'NO.{page+1}'
+    page_no = f'NO.{page + 1}'
     x = re.split("\n\n", d2)
     question = x[page]
     x3 = question.splitlines()[-1]
@@ -44,7 +50,7 @@ def split():
     def answer_check():
         global counter
         if answer == correct:
-            quest1 = str(page+1)
+            quest1 = str(page + 1)
             ans_time = datetime.now()
             ans_date = ans_time.strftime('%D:')
             ans_hour = ans_time.strftime('%H:%M:%S')
@@ -64,7 +70,7 @@ def split():
             clock()
             return
         else:
-            quest1 = str(page+1)
+            quest1 = str(page + 1)
             ans_time = datetime.now()
             ans_date = ans_time.strftime('%D:')
             ans_hour = ans_time.strftime('%H:%M:%S')
@@ -85,16 +91,8 @@ def split():
 # Checks if time limit has passed (2 hours)
 def clock():
     global counter
-    time_check = datetime.now()
-    hour_check = time_check.strftime('%H:%M:%S')
-    new_time = hour_check.split(':')
-    new_hour = new_time[0]
-    new_min = new_time[1]
-    old_time = hour.split(':')
-    old_hour = old_time[0]
-    old_min = old_time[1]
-    test_time = int(old_hour)+2
-    if new_hour == test_time and new_min == old_min:
+    time_check = datetime.now().strftime('%H:%M:%S')
+    if time_check == end_time:
         counter = 125
     else:
         return
@@ -114,10 +112,11 @@ def done():
     clear()
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
-    total = answers+wrongs
+    total = answers + wrongs
     if total != 125 and wrongs > 0:
         percentage = ((answers * 100) / total)
-        print(f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
+        print(
+            f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
         res = open('results.txt', 'a')
         res.write('****************************************\n')
         res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -131,7 +130,8 @@ def done():
     else:
         percentage = ((answers * 100) / 125)
         if percentage > 80:
-            print(f'You have successfully passed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
+            print(
+                f'You have successfully passed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
             res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -140,7 +140,8 @@ def done():
             time.sleep(5)
             quit()
         else:
-            print(f'You have failed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
+            print(
+                f'You have failed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
             res.write('****************************************\n')
             res.write(f'{date}{hour} : {percentage} percents with {answers} correct answers out of {total}.\n ')
@@ -150,13 +151,13 @@ def done():
             quit()
 
 
-while counter <= 125:
+while counter <= amount:
     clear()
     try:
         split()
     except IndexError or ValueError or IOError:
-        errors1 += 1
         while errors1 < 3:
+            errors1 += 1
             print('Something went wrong grabbing random question...\nTrying again...')
             time.sleep(2)
             pass
