@@ -12,11 +12,10 @@ skipped = 0
 errors1 = 0
 
 # Customization Area #
-amount = 125
-file = open('quiz.txt', 'r')
-print("Welcome user. Type 'done' whenever you want to quit.\n")
-time_limit = 2  # Hours
-score_limit = 80  # In percents
+amount = 125  # Amount of questions for the test
+file = open('quiz.txt', 'r')  # File to read the test from
+time_limit = 2  # Time limit in hours
+score_limit = 80  # Minimum percents to pass the test
 
 # Settings
 d1 = file.read()
@@ -27,6 +26,7 @@ time1 = datetime.now()
 date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
 end_time = format(time1 + timedelta(hours=time_limit), '%H:%M')
+print("Welcome user. Type 'done' whenever you want to quit.\n")
 
 # Clears old answers files if existed
 while counter == 0:
@@ -38,7 +38,7 @@ while counter == 0:
 
 # Splitting random questions from text file and their answers
 def split():
-    print(f'Question {counter}/{amount}, ends at {end_time}')
+    print(f'Question {counter}/{amount} - ends at {end_time}')
     page = random.randint(1, pages)
     page_no = f'NO.{page + 1}'
     x = re.split("\n\n", d2)
@@ -89,17 +89,19 @@ def split():
     answer_check()
 
 
-# Checks if time limit has passed 
+# Checks if time limit has passed
 def clock():
     global counter
     time_check = datetime.now().strftime('%H:%M')
     if time_check == end_time:
+        print('Your time is up !')
         counter = 125
+        time.sleep(1)
     else:
         return
 
 
-# Clear console 
+# Clear console
 def clear():
     if name == 'nt':
         os.system('cls')
@@ -155,7 +157,7 @@ while counter <= amount:
     except IndexError or ValueError or IOError:
         while errors1 < 3:
             errors1 += 1
-            print('Something went wrong grabbing random question...\nTrying again...')
+            print('Something went wrong...\nTrying again...')
             time.sleep(2)
             pass
         else:
