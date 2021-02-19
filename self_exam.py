@@ -15,6 +15,7 @@ errors1 = 0
 amount = 125  # Amount of questions for the test
 file = open('quiz.txt', 'r')  # File to read the test from
 time_limit = 2  # Time limit in hours
+time_limit2 = 30  # Time limit in minutes if needed
 score_limit = 80  # Minimum percents to pass the test
 
 # Settings
@@ -25,9 +26,9 @@ pages = d2.count('NO.')
 time1 = datetime.now()
 date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
-end_time = format(time1 + timedelta(hours=time_limit), '%H:%M')
+end_time = format(time1 + timedelta(hours=time_limit, minutes=time_limit2), '%H:%M')
 min_quest = int((score_limit*amount)/100)
-print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit} hours.\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).")
+print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit}:{time_limit2} hours.\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).")
 time.sleep(3)
 
 # Clears old answers files if existed
