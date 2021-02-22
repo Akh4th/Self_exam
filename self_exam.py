@@ -5,17 +5,18 @@ import time
 import os
 from os import name
 
-global counter, num, skipped, errors1
+global counter, num, skipped, errors1, asked, page
 counter = 0
 num = 0
 skipped = 0
 errors1 = 0
+asked = []
 
-# Customization Area #
+# Customization Area
 amount = 125  # Amount of questions for the test
 file = open('quiz.txt', 'r')  # File to read the test from
 time_limit = 2  # Time limit in hours
-time_limit2 = 30  # Time limit in minutes if needed
+time_limit2 = 30  # Time limit in minutes
 score_limit = 80  # Minimum percents to pass the test
 
 # Settings
@@ -28,7 +29,7 @@ date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
 end_time = format(time1 + timedelta(hours=time_limit, minutes=time_limit2), '%H:%M')
 min_quest = int((score_limit*amount)/100)
-print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit}:{time_limit2} hours.\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).")
+print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit}:{time_limit2} hours ({end_time}).\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).\n")
 time.sleep(3)
 
 # Clears old answers files if existed
@@ -42,10 +43,9 @@ while counter == 0:
 # Splitting random questions from text file and their answers
 def split():
     print(f'Question {counter}/{amount} - ends at {end_time}')
-    page = random.randint(1, pages)
-    page_no = f'NO.{page + 1}'
+    paging()
     x = re.split("\n\n", d2)
-    question = x[page]
+    question = x[page-1]
     x3 = question.splitlines()[-1]
     correct = x3[-1]
     print(question[:-9])
@@ -92,13 +92,25 @@ def split():
     answer_check()
 
 
+# Checks for duplication on questions number
+def paging():
+    global page
+    page = random.randint(1, pages)
+    if page in asked:
+        print('Duplication found, changing question...')
+        paging()
+    else:
+        asked.append(page)
+        return page
+
+
 # Checks if time limit has passed
 def clock():
     global counter
     time_check = datetime.now().strftime('%H:%M')
     if time_check == end_time:
         print('Your time is up !')
-        counter = 125
+        counter = amount
         time.sleep(1)
     else:
         return
@@ -118,7 +130,7 @@ def done():
     answers = int(len(open('correct_answers.txt', 'r').readlines()))
     wrongs = int(len(open('wrong_answer.txt', 'r').readlines()))
     total = answers + wrongs
-    if total != 125 and wrongs > 0:
+    if total != amount and wrongs > 0:
         percentage = ((answers * 100) / total)
         print(f'Your exam is over !\nTotal questions : {total}\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
         res = open('results.txt', 'a')
@@ -131,8 +143,11 @@ def done():
     elif total == 0:
         print('Good luck next time !')
         quit()
+    elif errors1 >= 3:
+        print(f'Your exam has been stopped !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {(answers*100)/amount}%')
+        quit()
     else:
-        percentage = ((answers * 100) / 125)
+        percentage = ((answers * 100) / amount)
         if percentage > score_limit:
             print(f'You have successfully passed the exam !\nCorrect answers : {answers}\nWrong answers : {wrongs}\nSkipped questions : {skipped}\nSuccess rate of {percentage}%')
             res = open('results.txt', 'a')
@@ -157,15 +172,15 @@ while counter <= amount:
     clear()
     try:
         split()
-    except IndexError or ValueError or IOError:
+    except IndexError or ValueError or IOError as exp:
         while errors1 < 3:
             errors1 += 1
-            print('Something went wrong...\nTrying again...')
+            print(f'{exp} error occurred...\nTrying again...')
             time.sleep(2)
             pass
         else:
-            print('3 Errors were recorded, aborting...')
+            print('3 Errors were recorded, aborting...\n')
             time.sleep(2)
-            quit()
+            done()
 else:
     done()
