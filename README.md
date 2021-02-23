@@ -9,5 +9,4 @@ Type 'done' whenever you'd like to quit and exam results will be printed when qu
 type 'skip' in order to skip a question without count it as a question.
 
 In order to use the script please format your questions file by as presented on 'quiz.txt'
-
 To configure the script differntly for a single use please run 'configuration.py' and after configuring type 'Run'
