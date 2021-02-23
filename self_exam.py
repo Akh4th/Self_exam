@@ -14,12 +14,13 @@ asked = []
 
 # Customization Area
 amount = 125  # Amount of questions for the test
-file = open('quiz.txt', 'r')  # File to read the test from
+file_name = 'quiz.txt'  # File to read the test from
 time_limit = 2  # Time limit in hours
 time_limit2 = 30  # Time limit in minutes
 score_limit = 80  # Minimum percents to pass the test
 
 # Settings
+file = open(file_name, 'r')
 d1 = file.read()
 file.close()
 d2 = str(d1)
@@ -29,7 +30,6 @@ date = time1.strftime('%D:')
 hour = time1.strftime('%H:%M:%S')
 end_time = format(time1 + timedelta(hours=time_limit, minutes=time_limit2), '%H:%M')
 min_quest = int((score_limit*amount)/100)
-print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit}:{time_limit2} hours ({end_time}).\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).\n")
 time.sleep(3)
 
 # Clears old answers files if existed
@@ -92,7 +92,8 @@ def split():
     answer_check()
 
 
-# Checks for duplication on questions number
+# Avoiding
+# \duplication on questions number
 def paging():
     global page
     page = random.randint(1, pages)
@@ -168,19 +169,25 @@ def done():
             quit()
 
 
-while counter <= amount:
-    clear()
-    try:
-        split()
-    except IndexError or ValueError or IOError as exp:
-        while errors1 < 3:
-            errors1 += 1
-            print(f'{exp} error occurred...\nTrying again...')
-            time.sleep(2)
-            pass
-        else:
-            print('3 Errors were recorded, aborting...\n')
-            time.sleep(2)
-            done()
-else:
-    done()
+def run():
+    print(f"Welcome user. Type 'done' whenever you want to quit.\nTo complete this test you'll have {time_limit}:{time_limit2} hours ({end_time}).\nIn order to pass the test you'll have to get {score_limit}% from {amount} questions ({min_quest} questions).\n")
+    while counter <= amount:
+        clear()
+        try:
+            split()
+        except IndexError or ValueError or IOError as exp:
+            while errors1 < 3:
+                errors1 += 1
+                print(f'{exp} error occurred...\nTrying again...')
+                time.sleep(2)
+                pass
+            else:
+                print('3 Errors were recorded, aborting...\n')
+                time.sleep(2)
+                done()
+    else:
+        done()
+
+
+if __name__ == "__main__":
+    run()
